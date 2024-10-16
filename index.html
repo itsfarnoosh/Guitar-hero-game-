@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+<head>
+    <title>FIT2102 A1 2023</title>
+    <style>
+        /* Set the background image for the entire body */
+        body {
+            background-image: url('assets/IMG_9271.jpg');
+            background-size:  auto; /* Adjust to fit the entire photo within the width */
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+           
+        }
+
+        /* Style the "Guitar Hero" title */
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px #000000;
+            margin-top: 20px;
+        }
+
+        /* Add some padding around the main content */
+        main {
+            padding: 20px;
+        }
+
+        /* Style for the side bar */
+        #sideBar {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Style for the text in the side bar */
+        .text {
+            margin-bottom: 10px;
+        }
+
+        .text .left {
+            font-weight: bold;
+        }
+
+        .text .right {
+            float: right;
+        }
+
+        /* Style the button */
+        button {
+            background-color: #FFD700;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #FFA500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guitar Hero</h1>
+    <main id="main" class="flex row">
+        <svg id="svgCanvas" viewBox="0 0 200 400">
+            <defs>
+                <!-- Define radial gradients for shading -->
+                <radialGradient
+                    id="greenGradient"
+                    cx="50%"
+                    cy="50%"
+                    r="50%"
+                    fx="50%"
+                    fy="50%"
+                >
+                    <stop
+                        offset="0%"
+                        style="stop-color: #00ff00; stop-opacity: 1"
+                    />
+                    <stop
+                        offset="100%"
+                        style="stop-color: #005500; stop-opacity: 1"
+                    />
+                </radialGradient>
+                <radialGradient
+                    id="redGradient"
+                    cx="50%"
+                    cy="50%"
+                    r="50%"
+                    fx="50%"
+                    fy="50%"
+                >
+                    <stop
+                        offset="0%"
+                        style="stop-color: #ff0000; stop-opacity: 1"
+                    />
+                    <stop
+                        offset="100%"
+                        style="stop-color: #550000; stop-opacity: 1"
+                    />
+                </radialGradient>
+                <radialGradient
+                    id="blueGradient"
+                    cx="50%"
+                    cy="50%"
+                    r="50%"
+                    fx="50%"
+                    fy="50%"
+                >
+                    <stop
+                        offset="0%"
+                        style="stop-color: #0000ff; stop-opacity: 1"
+                    />
+                    <stop
+                        offset="100%"
+                        style="stop-color: #000055; stop-opacity: 1"
+                    />
+                </radialGradient>
+                <radialGradient
+                    id="yellowGradient"
+                    cx="50%"
+                    cy="50%"
+                    r="50%"
+                    fx="50%"
+                    fy="50%"
+                >
+                    <stop
+                        offset="0%"
+                        style="stop-color: #ffff00; stop-opacity: 1"
+                    />
+                    <stop
+                        offset="100%"
+                        style="stop-color: #555500; stop-opacity: 1"
+                    />
+                </radialGradient>
+            </defs>
+            <audio id="audioPlayer" controls style="display: none"></audio>
+
+            <line
+                x1="20%"
+                y1="0"
+                x2="20%"
+                y2="90%"
+                stroke="green"
+                stroke-width="5"
+            />
+            <line
+                x1="40%"
+                y1="0"
+                x2="40%"
+                y2="90%"
+                stroke="red"
+                stroke-width="5"
+            />
+            <line
+                x1="60%"
+                y1="0"
+                x2="60%"
+                y2="90%"
+                stroke="blue"
+                stroke-width="5"
+            />
+            <line
+                x1="80%"
+                y1="0"
+                x2="80%"
+                y2="90%"
+                stroke="yellow"
+                stroke-width="5"
+            />
+            <line
+                id="hitpointLine"
+                x1="0"
+                y1="320" 
+                x2="200" 
+                y2="320" 
+                stroke="white" 
+                stroke-width="2"
+                stroke-dasharray="5,5" 
+            />
+
+            <circle
+                cx="20%"
+                cy="350"
+                r="4%"
+                fill="url(#greenGradient)"
+                stroke="transparent"
+                stroke-width="2"
+            />
+            <circle
+                cx="40%"
+                cy="350"
+                r="4%"
+                fill="url(#redGradient)"
+                stroke="transparent"
+                stroke-width="2"
+            />
+            <circle
+                cx="60%"
+                cy="350"
+                r="4%"
+                fill="url(#blueGradient)"
+                stroke="transparent"
+                stroke-width="2"
+            />
+            <circle
+                cx="80%"
+                cy="350"
+                r="4%"
+                fill="url(#yellowGradient)"
+                stroke="transparent"
+                stroke-width="2"
+            />
+
+            <!-- game over text box -->
+            <g id="gameOver" visibility="hidden">
+                <rect
+                    x="26"
+                    y="120"
+                    fill="white"
+                    height="48"
+                    width="149"
+                ></rect>
+                <text x="36" y="150" fill="black" font-size="24px">Game Over</text>
+            </g>
+        </svg>
+        <div id="sideBar" class="flex col">
+            <div id="info" class="flex col">
+                <div class="text">
+                    <span class="left">Multiplier: </span>
+                    <span class="right" id="multiplierText">...</span>
+                </div>
+                <div class="text">
+                    <span class="left">Score: </span>
+                    <span class="right" id="scoreText">...</span>
+                </div>
+                <div class="text">
+                    <span class="left">Highscore: </span>
+                    <span class="right" id="highScoreText">...</span>
+                </div>
+            </div>
+            <button id="resetHighScoreButton">Reset High Score</button>
+        </div>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
